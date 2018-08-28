@@ -1,0 +1,5 @@
+To ensure that all Wikipedia content is verifiable, anyone may question an uncited claim by inserting a simple {{Citation needed}} tag, or by using a more comprehensive {{Citation needed|reason=Your explanation here|date=August 2018}} clause. This displays as: 
+
+Example: 87% of statistics are made up on the spot.
+"Citation needed" statements are part of  Wikipedia's backlog of outstanding problems. Currently there are 344,896 articles with "Citation needed" statements (see the historical number of tags). You can help reduce the backlog!
+

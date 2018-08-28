@@ -1,0 +1,3 @@
+An electromagnetic pulse (EMP), also sometimes called a transient electromagnetic disturbance, is a short burst of electromagnetic energy. Such a pulse's origination may be a natural occurrence or man-made and can occur as a radiated, electric, or magnetic field or a conducted electric current, depending on the source.
+EMP interference is generally disruptive or damaging to electronic equipment, and at higher energy levels a powerful EMP event such as a lightning strike can damage physical objects such as buildings and aircraft structures. The management of EMP effects is an important branch of electromagnetic compatibility (EMC) engineering.
+Weapons have been developed to deliver the damaging effects of high-energy EMP.

@@ -1,0 +1,1 @@
+On the film review aggregation website Rotten Tomatoes, films that all surveyed critics consider bad have a 0% rating. Some of these are often considered some of the worst films ever made.

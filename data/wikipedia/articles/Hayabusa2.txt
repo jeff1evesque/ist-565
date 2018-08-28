@@ -1,0 +1,2 @@
+Hayabusa2 is an asteroid sample-return mission operated by the Japanese space agency, JAXA. It follows on from Hayabusa and addresses weak points identified in that mission. Hayabusa2 was launched on 3 December 2014 and rendezvoused at near-Earth asteroid 162173 Ryugu on 27 June 2018. It is intended to survey the asteroid for a year and a half, depart in December 2019, and return to Earth in December 2020.
+Hayabusa2 carries multiple payloads for science: remote sensing, sampling, and lander/rovers—four small probes that will investigate the asteroid surface.

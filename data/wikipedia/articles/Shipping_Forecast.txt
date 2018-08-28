@@ -1,0 +1,8 @@
+The Shipping Forecast is a BBC Radio broadcast of weather reports and forecasts for the seas around the coasts of the British Isles. It is produced by the Met Office and broadcast by BBC Radio 4 on behalf of the Maritime and Coastguard Agency. The forecasts sent over the Navtex system use a similar format and the same sea areas. The waters around the British Isles are divided into 31 sea areas, also known as weather areas (see map below). There are four broadcasts per day at the following (UK local) times:
+
+0048 – transmitted on FM and LW. Includes weather reports from an extended list of coastal stations at 0052 and an inshore waters forecast at 0055 and concludes with a brief UK weather outlook for the coming day. The broadcast finishes at approximately 0058.
+0520 – transmitted on FM and LW. Includes weather reports from coastal stations at 0525, and an inshore waters forecast at 0527.
+1201 – normally transmitted on LW only.
+1754 – transmitted only on LW on weekdays, as an opt-out from the PM programme, but at weekends transmitted on both FM and LW.The unique and distinctive sound of these broadcasts has led to their attracting an audience much wider than that directly interested in maritime weather conditions.
+In August 2017, Radio 4 celebrated the service's 150th anniversary.
+

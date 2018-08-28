@@ -1,0 +1,15 @@
+In computer science, in control flow graphs, a node d dominates a node n if every path from the entry node to n must go through d. Notationally, this is written as d dom n (or sometimes d 
+  
+    
+      
+        ≫
+      
+    
+    {\displaystyle \gg }
+   n). By definition, every node dominates itself.
+There are a number of related concepts:
+
+A node d strictly dominates a node n if d dominates n and d does not equal n.
+The immediate dominator or idom of a node n is the unique node that strictly dominates n but does not strictly dominate any other node that strictly dominates n. Every node, except the entry node, has an immediate dominator.
+The dominance frontier of a node d is the set of all nodes n such that d dominates an immediate predecessor of n, but d does not strictly dominate n. It is the set of nodes where d's dominance stops.
+A dominator tree is a tree where each node's children are those nodes it immediately dominates. Because the immediate dominator is unique, it is a tree. The start node is the root of the tree.

@@ -1,0 +1,2 @@
+In computing, a magic cookie, or just cookie for short, is a token or short packet of data passed between communicating programs, where the data is typically not meaningful to the recipient program.  The contents are opaque and not usually interpreted until the recipient passes the cookie data back to the sender or perhaps another program at a later time.  The cookie is often used like a ticket –  to identify a particular event or transaction.In some cases, recipient programs are able to meaningfully compare two cookies for equality.
+

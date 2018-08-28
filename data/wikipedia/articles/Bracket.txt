@@ -1,0 +1,3 @@
+A bracket is a tall punctuation mark typically used in matched pairs within text, to set apart or interject other text.  The matched pair is best described as opening and closing. Less formally, in a left-to-right context, it may be described as left and right, and in a right-to-left context, as right and left.
+Forms include round (also called "parentheses"), square, curly (also called "braces"), and angle brackets (also called "chevrons"); and various other pairs of symbols.
+In addition to referring to the class of all types of brackets, the unqualified word bracket is most commonly used to refer to a specific type of bracket: in modern American usage, this is usually the square bracket and in modern British usage, this is usually the round bracket.

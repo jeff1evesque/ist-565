@@ -1,0 +1,2 @@
+The terms foobar (), or foo and others are used as placeholder names (also referred to as metasyntactic variables) in computer programming or computer-related documentation. They have been used to name entities such as variables, functions, and commands whose exact identity is unimportant and serve only to demonstrate a concept.
+
