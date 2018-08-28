@@ -1,0 +1,2 @@
+USB-C, also known as USB Type-C, is a 24-pin USB connector system, which is distinguished by its two-fold rotationally-symmetrical connector.The USB Type-C Specification 1.0 was published by the USB Implementers Forum (USB-IF) and was finalized in August 2014. It was developed at roughly the same time as the USB 3.1 specification.
+A device that implements USB-C does not necessarily implement USB 3.1, USB Power Delivery, or Alternate Mode.

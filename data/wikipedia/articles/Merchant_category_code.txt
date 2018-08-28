@@ -1,0 +1,8 @@
+A Merchant Category Code (MCC) is a four-digit number listed in ISO 18245 for retail financial services. MCC is used to classify the business by the type of goods or services it provides. MCCs are assigned by merchant type (e.g. one for hotels, one for office supply stores, etc.) or by merchant name (e.g. 3000 for United Airlines).
+A MCC is assigned to a merchant by the card company when the business first starts accepting cards as a form of payment.
+The code reflects the primary category in which the merchant does business and may be used:
+
+to determine the interchange fee paid by the merchant, with riskier lines of business paying higher fees.
+by credit card companies to offer cash back rewards or reward points, for spending in specific categories.
+by card networks to define rules and restrictions for card transactions (for example, Automated Fuel Dispensers (MCC 5542) have specific rules for authorization and clearing messages).
+in the United States, to determine whether a payment is primarily for “services”, which needs to be reported by the payor to the Internal Revenue Service for tax purposes, or for “merchandise”,  which does not.

@@ -1,0 +1,5 @@
+This is a category to help keep count of the total number of articles with the {{citation needed}} template.  They should all be in one of the dated categories, which can be found at Category:Articles with unsourced statements. For the historical size of the backlog, see this offwiki tool.
+Want to help reduce the backlog? 
+With 344,941 in this category sometimes it's hard to choose which article to work on. The tool Citation Hunt makes that easier by suggesting random articles, which you can sort by topical category membership. 
+
+I can help! Give me a random citation to find!

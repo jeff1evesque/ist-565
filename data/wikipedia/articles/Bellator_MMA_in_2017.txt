@@ -1,0 +1,1 @@
+2017 was the ninth year in the history of Bellator MMA, a mixed martial arts promotion based in the United States. This year marked the third time that Bellator MMA has done monthly shows as opposed to a seasonal format.

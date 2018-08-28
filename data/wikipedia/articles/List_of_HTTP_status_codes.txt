@@ -1,0 +1,8 @@
+This is a list of Hypertext Transfer Protocol (HTTP) response status codes. Status codes are issued by a server in response to a client's request made to the server. It includes codes from IETF Request for Comments (RFCs), other specifications, and some additional codes used in some common applications of the Hypertext Transfer Protocol (HTTP). The first digit of the status code specifies one of five standard classes of responses. The message phrases shown are typical, but any human-readable alternative may be provided. Unless otherwise stated, the status code is part of the HTTP/1.1 standard (RFC 7231).The Internet Assigned Numbers Authority (IANA) maintains the official registry of HTTP status codes.Microsoft Internet Information Services (IIS) sometimes uses additional decimal sub-codes for more specific information, however these sub-codes only appear in the response payload and in documentation, not in the place of an actual HTTP status code.
+All HTTP response status codes are separated into five classes (or categories). The first digit of the status code defines the class of response. The last two digits do not have any class or categorization role. There are five values for the first digit:
+
+1xx (Informational): The request was received, continuing process
+2xx (Successful): The request was successfully received, understood, and accepted
+3xx (Redirection): Further action needs to be taken in order to complete the request
+4xx (Client Error): The request contains bad syntax or cannot be fulfilled
+5xx (Server Error): The server failed to fulfill an apparently valid request

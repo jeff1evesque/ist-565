@@ -1,0 +1,3 @@
+The version history of the Android mobile operating system began with the public release of the Android beta on November 5, 2007. The first commercial version, Android 1.0, was released on September 23, 2008. Android is continually developed by Google and the Open Handset Alliance, and it has seen a number of updates to its base operating system since the initial release.
+
+Versions 1.0 and 1.1 were not released under specific code names, although Android 1.1 was unofficially known as Petit Four. Android code names are confectionery-themed and have been in alphabetical order since 2009's Android 1.5 Cupcake, with the most recent major version being Android 9.0 Pie, released in August 2018.

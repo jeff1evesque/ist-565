@@ -1,0 +1,9 @@
+This is a list of the world's countries and their dependent territories by area, ranked by total area.
+Entries in this list include, but are not limited to, those in the ISO 3166-1 standard, which includes sovereign states and dependent territories. Largely unrecognised states not in ISO 3166-1 are included in the list in ranked order, but are not given a rank number. The areas of such largely unrecognised states are in most cases also included in the areas of the more widely recognised states that claim the same territory; see the notes in the "notes" column for each country for clarification.
+Not included in the list are individual country claims to parts of the continent of Antarctica, entities such as the European Union that have some degree of sovereignty but do not consider themselves to be sovereign countries or dependent territories, and unrecognised micronations such as the Principality of Sealand.
+This list includes three measurements of area:
+
+Total area: the sum of land and water areas within international boundaries and coastlines.
+Land area: the aggregate of all land within international boundaries and coastlines, excluding water area.
+Water area: the sum of the surface areas of all inland water bodies (lakes, reservoirs, and rivers) within international boundaries and coastlines. Coastal internal waters (some small bays) may be included. Territorial waters are not included unless otherwise noted. Contiguous zones and exclusive economic zones are not included.Data is taken from the United Nations Statistics Division unless otherwise noted.
+

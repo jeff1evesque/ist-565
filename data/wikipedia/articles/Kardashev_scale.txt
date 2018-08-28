@@ -1,0 +1,5 @@
+The Kardashev scale is a method of measuring a civilization's level of technological advancement, based on the amount of energy a civilization is able to use. It was proposed by Soviet astronomer Nikolai Kardashev in 1964. The scale has three designated categories:
+
+A Type I civilization—also called a planetary civilization—can use and store all of the energy which reaches its planet from its parent star.
+A Type II civilization—also called a stellar civilization—can harness the total energy of its planet's parent star (the most popular hypothetical concept being the Dyson sphere—a device which would encompass the entire star and transfer its energy to the planet(s)).
+A Type III civilization—also called a galactic civilization—can control energy on the scale of its entire host galaxy.The scale is hypothetical, and regards energy consumption on a cosmic scale. Various extensions of the scale have since been proposed, including a wider range of power levels (types 0, IV and V) and the use of metrics other than pure power.

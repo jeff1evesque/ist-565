@@ -1,0 +1,104 @@
+In probability theory, the normal (or Gaussian or Gauss or Laplace–Gauss) distribution is a very common continuous probability distribution. Normal distributions are important in statistics and are often used in the natural and social sciences to represent real-valued random variables whose distributions are not known. A random variable with a Gaussian distribution is said to be normally distributed and is called a normal deviate.
+The normal distribution is useful because of the central limit theorem. In its most general form, under some conditions (which include finite variance), it states that averages of samples of observations of random variables independently drawn from independent distributions converge in distribution to the normal, that is, become normally distributed when the number of observations is sufficiently large. Physical quantities that are expected to be the sum of many independent processes (such as measurement errors) often have distributions that are nearly normal. Moreover, many results and methods (such as propagation of uncertainty and least squares parameter fitting) can be derived analytically in explicit form when the relevant variables are normally distributed.
+The normal distribution is sometimes informally called the bell curve. However, many other distributions are bell-shaped (such as the Cauchy, Student's t, and logistic distributions).
+The probability density of the normal distribution is
+
+  
+    
+      
+        f
+        (
+        x
+        ∣
+        μ
+        ,
+        
+          σ
+          
+            2
+          
+        
+        )
+        =
+        
+          
+            1
+            
+              2
+              π
+              
+                σ
+                
+                  2
+                
+              
+            
+          
+        
+        
+          e
+          
+            −
+            
+              
+                
+                  (
+                  x
+                  −
+                  μ
+                  
+                    )
+                    
+                      2
+                    
+                  
+                
+                
+                  2
+                  
+                    σ
+                    
+                      2
+                    
+                  
+                
+              
+            
+          
+        
+      
+    
+    {\displaystyle f(x\mid \mu ,\sigma ^{2})={\frac {1}{\sqrt {2\pi \sigma ^{2}}}}e^{-{\frac {(x-\mu )^{2}}{2\sigma ^{2}}}}}
+  where
+
+  
+    
+      
+        μ
+      
+    
+    {\displaystyle \mu }
+   is the mean or expectation of the distribution (and also its median and mode),
+
+  
+    
+      
+        σ
+      
+    
+    {\displaystyle \sigma }
+   is the standard deviation, and
+
+  
+    
+      
+        
+          σ
+          
+            2
+          
+        
+      
+    
+    {\displaystyle \sigma ^{2}}
+   is the variance.

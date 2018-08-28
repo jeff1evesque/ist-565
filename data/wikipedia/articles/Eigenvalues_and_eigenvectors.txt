@@ -1,0 +1,40 @@
+In linear algebra, an eigenvector or characteristic vector of a linear transformation is a non-zero vector that changes by only a scalar factor when that linear transformation is applied to it. More formally, if T is a linear transformation from a vector space V over a field F into itself and v is a vector in V that is not the zero vector, then v is an eigenvector of T if T(v) is a scalar multiple of v.  This condition can be written as the equation
+
+  
+    
+      
+        T
+        (
+        
+          v
+        
+        )
+        =
+        λ
+        
+          v
+        
+        ,
+      
+    
+    {\displaystyle T(\mathbf {v} )=\lambda \mathbf {v} ,}
+  where λ is a scalar in the field F, known as the eigenvalue,  characteristic value, or characteristic root associated with the eigenvector v.
+If the vector space V is finite-dimensional, then the linear transformation T can be represented as a square matrix A, and the vector v by a column vector, rendering the above mapping as a matrix multiplication on the left hand side and a scaling of the column vector on the right hand side in the equation
+
+  
+    
+      
+        A
+        
+          v
+        
+        =
+        λ
+        
+          v
+        
+        .
+      
+    
+    {\displaystyle A\mathbf {v} =\lambda \mathbf {v} .}
+  There is a direct correspondence between n-by-n square matrices and linear transformations from an n-dimensional vector space to itself, given any basis of the vector space. For this reason, it is equivalent to define eigenvalues and eigenvectors using either the language of matrices or the language of linear transformations.Geometrically an eigenvector, corresponding to a real nonzero eigenvalue, points in a direction that is stretched by the transformation and the eigenvalue is the factor by which it is stretched.  If the eigenvalue is negative, the direction is reversed.

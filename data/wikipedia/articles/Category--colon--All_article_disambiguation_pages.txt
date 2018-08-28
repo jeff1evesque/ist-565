@@ -1,0 +1,3 @@
+This is a tracking category for disambiguation pages. It enables us to use {{PAGESINCATEGORY:All article disambiguation pages}} to get the exact number of disambiguation pages in the main namespace.
+Pages are put in this category by templates such as {{Disambiguation}} and {{Airport disambiguation}}. That is, templates built with the {{dmbox}} meta-template, which is doing the actual categorising.
+This category only lists pages in main (article) space.
