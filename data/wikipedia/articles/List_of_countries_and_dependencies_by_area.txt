@@ -6,4 +6,3 @@ This list includes three measurements of area:
 Total area: the sum of land and water areas within international boundaries and coastlines.
 Land area: the aggregate of all land within international boundaries and coastlines, excluding water area.
 Water area: the sum of the surface areas of all inland water bodies (lakes, reservoirs, and rivers) within international boundaries and coastlines. Coastal internal waters (some small bays) may be included. Territorial waters are not included unless otherwise noted. Contiguous zones and exclusive economic zones are not included.Data is taken from the United Nations Statistics Division unless otherwise noted.
-

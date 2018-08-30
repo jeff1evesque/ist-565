@@ -1,3 +1,8 @@
 This page displays information about  Spoken Wikipedia Project. Articles under each subject heading are listed alphabetically (by surname for people).
 For help playing Ogg audio, see: Media help.
 To request an article to be spoken, see Requests. For all other information, see the project page.
+
+Articles are marked in the following ways:
+
+Articles marked with  were featured articles at the time of recording.
+Bolded articles have been featured, with an audio link, on the Main Page.There are 1,360 spoken articles in English.
