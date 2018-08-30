@@ -1,3 +1,2 @@
 The ICAO aircraft type designator is a two-, three- or four-character alphanumeric code designating every aircraft type (and some sub-types) that may appear in flight planning. These codes are defined by the International Civil Aviation Organization, and published in ICAO Document 8643 Aircraft Type Designators.
 ICAO codes are used by air traffic control and airline operations such as flight planning. They are not the same as the IATA codes encountered by the general public, which are used for airline timetables, etc.
-

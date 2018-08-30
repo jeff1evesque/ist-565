@@ -1,3 +1,2 @@
 A Leibniz wheel or stepped drum is a cylinder with a set of teeth of incremental lengths which, when coupled to a counting wheel, can be used in the calculating engine of a class of mechanical calculators.  Invented by Leibniz in 1673, it was used for three centuries until the advent of the electronic calculator in the mid-1970s.
 Leibniz built a machine called the stepped reckoner based on the design of the stepped drum in 1694. It was made famous by Thomas de Colmar when he used it, a century and a half later, in his Arithmometer, the first mass-produced calculating machine.  It was also used in the Curta calculator, a very popular portable calculator introduced in the second part of the 20th century.
-

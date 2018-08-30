@@ -1,3 +1,4 @@
 Throughout Wikipedia, the pronunciation of words is indicated by means of the International Phonetic Alphabet (IPA). The following tables list the IPA symbols used for English words and pronunciations. Please note that several of these symbols are used in ways that are specific to Wikipedia and differ from those used by dictionaries.
 If the IPA symbols are not displayed properly by your browser, see the links below.
 If you are adding a pronunciation using this key, such pronunciations should generally be formatted using the template {{IPAc-en}}. The template provides tooltips for each symbol in the pronunciation. See the template page for instructions.
+
