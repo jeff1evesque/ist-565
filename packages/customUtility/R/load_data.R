@@ -6,7 +6,7 @@
 ##     - data.table
 ##     - RJSONIO
 ##
-load_df = function(source, remove=FALSE, type='csv') {
+load_data = function(source, remove=FALSE, type='csv') {
   ##
   ## load source(s) into dataframe
   ##
