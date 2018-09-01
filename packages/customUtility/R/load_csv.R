@@ -3,7 +3,7 @@
 ##
 ## Note: this script requires the 'data.table' package.
 ##
-load_df = function(source, remove) {
+load_df = function(source, remove=FALSE) {
   ##
   ## load source(s) into dataframe
   ##
