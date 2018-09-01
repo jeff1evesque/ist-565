@@ -1,19 +1,31 @@
-##
+\##
 ## load_csv.R, loads sourefile(s) into dataframe.
 ##
-## Note: this script requires the 'data.table' package.
+## Note: this script requires the following packages:
 ##
-load_df = function(source, remove=FALSE) {
+##     - data.table
+##     - RJSONIO
+##
+load_df = function(source, remove=FALSE, type='csv') {
   ##
   ## load source(s) into dataframe
   ##
   ## @list.files, runs on the current directory
   ##
   if (is.vector(source) {
-    files = list.files(pattern='*.csv')
-    df = do.call(rbind, lapply(files, fread)
+    files = list.files(pattern=paste('*.', type, sep=''))
+
+    if (type == 'csv') {
+      df = do.call(rbind, lapply(files, fread))
+    } else if (type == 'json') {
+      df = do.call(rbind, lapply(files, fromJSON))
+    }
   } else {
-    df = read.csv(source, header = TRUE)
+    if (type == 'csv') {
+      df = read.csv(source, header = TRUE)
+    } else if (type == 'json') {
+      df = fromJSON(source)
+    }
   }
 
   ## optionally remove NA rows
