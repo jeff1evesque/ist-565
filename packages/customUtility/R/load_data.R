@@ -12,7 +12,7 @@ load_df = function(source, remove=FALSE, type='csv') {
   ##
   ## @list.files, runs on the current directory
   ##
-  if (is.vector(source)) {
+  if (file_test('-f', source)) {
     files = list.files(pattern=paste('*.', type, sep=''))
 
     if (type == 'csv') {
@@ -20,7 +20,7 @@ load_df = function(source, remove=FALSE, type='csv') {
     } else if (type == 'json') {
       df = do.call(rbind, lapply(files, fromJSON))
     }
-  } else {
+  } else if (file_test('-d', source)) {
     if (type == 'csv') {
       df = read.csv(source, header = TRUE)
     } else if (type == 'json') {
