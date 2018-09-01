@@ -12,7 +12,7 @@ load_df = function(source, remove=FALSE, type='csv') {
   ##
   ## @list.files, runs on the current directory
   ##
-  if (is.vector(source) {
+  if (is.vector(source)) {
     files = list.files(pattern=paste('*.', type, sep=''))
 
     if (type == 'csv') {
