@@ -1,2 +1,2 @@
-export(load_csv)
+export(load_data)
 export(load_package)
