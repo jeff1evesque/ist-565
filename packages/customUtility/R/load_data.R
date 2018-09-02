@@ -16,21 +16,21 @@ load_data = function(source, remove=FALSE, type='csv') {
     files = list.files(pattern=paste('*.', type, sep=''))
 
     if (type == 'csv') {
-      df = do.call(rbind, lapply(files, fread))
-    } else if (type == 'json') {
-      df = do.call(rbind, lapply(files, fromJSON))
-    }
-  } else if (file_test('-d', source)) {
-    if (type == 'csv') {
       df = read.csv(source, header = TRUE)
     } else if (type == 'json') {
       df = fromJSON(source)
+    }
+  } else if (file_test('-d', source)) {
+    if (type == 'csv') {
+      df = do.call(rbind, lapply(files, fread))
+    } else if (type == 'json') {
+      df = do.call(rbind, lapply(files, fromJSON))
     }
   }
 
   ## optionally remove NA rows
   if (remove) {
-      df = df[complete.cases(df),]
+    df = df[complete.cases(df),]
   }
 
   ## return dataframe
