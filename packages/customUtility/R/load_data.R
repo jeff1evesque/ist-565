@@ -19,12 +19,18 @@ load_data = function(source, remove=FALSE, type='csv') {
       df = fromJSON(source)
     }
   } else if (file_test('-d', source)) {
-    files = list.files(path=source, pattern=paste('*.', type, sep=''))
+    ## generate path of all files
+    files = paste(
+        source,
+        '/',
+        list.files(path=source, pattern=paste('*.', type, sep='')),
+        sep=''
+    )
 
     if (type == 'csv') {
-      df = do.call(rbind, lapply(files, fread))
+      df = as.data.frame(do.call(rbind, lapply(files, fread)))
     } else if (type == 'json') {
-      df = do.call(rbind, lapply(files, fromJSON))
+      df = as.data.frame(do.call(rbind, lapply(files, fromJSON)))
     }
   }
 
