@@ -11,12 +11,12 @@ if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
   setwd(cwd)
 }
 
-## load packages
-load_package(c('data.table', 'RJSONIO'))
-
 ## utility functions
 devtools::install_local(paste(cwd, sep='', '/packages/customUtility'))
 library('customUtility')
+
+## load packages
+load_package(c('data.table', 'RJSONIO'))
 
 ## create dataframes
 df.wikipedia = load_data('data/wikipedia', remove=TRUE, type='json')
