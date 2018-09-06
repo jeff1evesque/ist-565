@@ -47,7 +47,7 @@ load_data = function(source, remove=FALSE, type='csv') {
     )
 
     ## remove unnecessary column
-    df[,-which(names(df) == 'variable')]
+    df = df[,-which(names(df) == 'variable')]
   }
 
   ## optionally remove NA rows
