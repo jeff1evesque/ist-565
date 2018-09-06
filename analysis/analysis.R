@@ -1,8 +1,10 @@
 ##
-## arima.R, ARIMA analysis on wikipedia traffic:
+## analysis.R, load + generate analysis:
 ##
-##     - https://www.dropbox.com/s/x14f3bg8flej1n7/train-wikipedia.csv?dl=1
-##     - https://www.dropbox.com/s/o2df10dnyt3bg02/test-wikipedia.csv?dl=1
+##     - wikipedia
+##     - twitter
+##     - nasdaq (ixic)
+##     - nasdaq (ndx)
 ##
 
 ## set project cwd: only execute in RStudio
