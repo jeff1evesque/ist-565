@@ -1,5 +1,5 @@
 ##
-## load_data.R, loads sourefile(s) into dataframe.
+## load_data.R, loads sourcefile(s) into dataframe.
 ##
 ## Note: this script requires the following packages:
 ##
