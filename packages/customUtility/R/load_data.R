@@ -33,7 +33,11 @@ load_data = function(source, remove=FALSE, type='csv') {
       df = do.call(rbind, lapply(files, fromJSON))
     }
 
+    ##
     ## large matrix to dataframe
+    ##
+    ## @melt, reformats dataframe, by aggregating repeating columns
+    ##
     df = as.data.frame(t(apply(df, 2, unlist)))
     measure = unique(colnames(df))
     df = melt(
@@ -41,6 +45,9 @@ load_data = function(source, remove=FALSE, type='csv') {
         measure.vars = patterns(measure),
         value.name = measure
     )
+
+    ## remove unnecessary column
+    df[,-which(names(df) == 'variable')]
   }
 
   ## optionally remove NA rows
