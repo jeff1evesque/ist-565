@@ -28,10 +28,19 @@ load_data = function(source, remove=FALSE, type='csv') {
     )
 
     if (type == 'csv') {
-      df = as.data.frame(do.call(rbind, lapply(files, fread)))
+      df = do.call(rbind, lapply(files, fread))
     } else if (type == 'json') {
-      df = as.data.frame(do.call(rbind, lapply(files, fromJSON)))
+      df = do.call(rbind, lapply(files, fromJSON))
     }
+
+    ## large matrix to dataframe
+    df = as.data.frame(t(apply(df, 2, unlist)))
+    measure = unique(colnames(df))
+    df = melt(
+        as.data.table(df),
+        measure.vars = patterns(measure),
+        value.name = measure
+    )
   }
 
   ## optionally remove NA rows
