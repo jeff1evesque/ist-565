@@ -17,8 +17,13 @@ if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
 devtools::install_local(paste(cwd, sep='', '/packages/customUtility'))
 library('customUtility')
 
+##
 ## load packages
-load_package(c('data.table', 'RJSONIO'))
+##
+## AFINN, list of English words rated for valence with an integer,
+##     between minus five (negative) and plus five (positive)
+##
+load_package(c('data.table', 'RJSONIO', 'AFINN'))
 
 ## create dataframes
 df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json')
