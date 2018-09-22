@@ -1,3 +1,2 @@
 export(load_data)
 export(load_package)
-export(score_text)
