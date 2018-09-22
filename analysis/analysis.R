@@ -13,6 +13,9 @@ if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
   setwd(cwd)
 }
 
+## create ignored directories
+dir.create(file.path(cwd, 'visualization'), showWarnings = FALSE)
+
 ## utility functions
 devtools::install_local(paste(cwd, sep='', '/packages/customUtility'))
 library('customUtility')
@@ -59,6 +62,16 @@ tweet_sentiments = unnested_tweet %>%
   spread(sentiment, n, fill = 0) %>%
   mutate(sentiment = positive - negative)
 
-ggplot(tweet_sentiments, aes(index, sentiment, fill = sentiment > 0)) +
-  geom_bar(alpha = 0.5, stat = 'identity', show.legend = FALSE) +
-  facet_wrap(~timestamp, ncol = 2, scales = "free_x")
+## 2013 subset ggplot
+twitter_subset = c()
+years = c('2014', '2015', '2016', '2017', '2018')
+
+for (year in years) {
+  ## generate ggplot
+  ggplot(tweet_sentiments, aes(index, sentiment, fill = sentiment > 0)) +
+    geom_bar(alpha = 0.5, stat = 'identity', show.legend = FALSE) +
+    facet_wrap(~timestamp, ncol = 7, scales = 'free_x')
+
+  ## save ggplot
+  ggsave(file=paste0('visualization/twitter_sentiment--', year, '.png'), width = 14, height = 10, units = 'in')
+}
