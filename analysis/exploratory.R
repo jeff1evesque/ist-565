@@ -26,7 +26,7 @@ library('customUtility')
 ##
 ## tidyverse, allows 'group_by'
 ##
-load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools', 'stringr'))
+load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools', 'stringr', 'naivebayes', 'stats'))
 
 ## create dataframes
 df.ixic = load_data(paste0(cwd, '/data/nasdaq/^ixic.csv'), remove=TRUE, type='csv')
@@ -68,10 +68,56 @@ ggsave(
 ## day of week
 df.ixic$day = weekdays(as.Date(unlist(df.ixic$Date),'%d-%m-%Y'))
 df.ixic = df.ixic[-c(1,nrow(df.ixic)),]
+df.ixic = df.ixic[, -which(names(df.ixic) == 'Date')]
 
-## perform svm
+## train + test
+set.seed(123)
+smp_size = floor(0.75 * nrow(df.ixic))
+train_ind = sample(seq_len(nrow(df.ixic)), size = smp_size)
+
+train = df.ixic[train_ind, ]
+test = df.ixic[-train_ind, ]
+
+## train naive bayes
 fit.nb = naive_bayes(
-  as.factor(day) ~ .,
-  data=df.ixic,
+  day ~ .,
+  data=train,
   laplace = 1
 )
+
+## predict against test
+nb.pred = predict(fit.nb, test)
+fit.nb.table = table(nb.pred, test$day)
+nb.error = 1-sum(diag(fit.nb.table))/sum(fit.nb.table)
+
+##
+## naive bayes report
+##
+sink('visualization/nb.txt')
+cat('===========================================================\n')
+cat('naive bayes model: \n')
+cat('===========================================================\n')
+fit.nb
+cat('\n\n')
+cat('===========================================================\n')
+cat('prediction: \n')
+cat('===========================================================\n')
+nb.pred
+cat('\n\n')
+cat('===========================================================\n')
+cat('confusion matrix:\n')
+cat('===========================================================\n')
+fit.nb.table
+cat('\n\n')
+cat('===========================================================\n')
+cat('resubstitution error:\n')
+cat('===========================================================\n')
+nb.error
+sink()
+
+##
+## plot naive bayes
+##
+png('visualization/rnb.png', width=10, height=5, units='in', res=1400)
+plot(fit.nb, main='IXIC: Denisty vs Volume')
+dev.off()
