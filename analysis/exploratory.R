@@ -1,7 +1,6 @@
 ##
-## analysis.R, load + generate analysis:
+## exploratory.R, load + exploratory analysis:
 ##
-##     - wikipedia
 ##     - twitter
 ##     - nasdaq (ixic)
 ##     - nasdaq (ndx)
@@ -66,12 +65,16 @@ tweet_sentiments = unnested_tweet %>%
 twitter_subset = c()
 years = c('2014', '2015', '2016', '2017', '2018')
 
-for (year in years) {
-  ## generate ggplot
-  ggplot(tweet_sentiments, aes(index, sentiment, fill = sentiment > 0)) +
-    geom_bar(alpha = 0.5, stat = 'identity', show.legend = FALSE) +
-    facet_wrap(~timestamp, ncol = 7, scales = 'free_x')
+## entire plot
+nsize = nrow(tweet_sentiments)
+ggplot(tweet_sentiments, aes(index, sentiment, fill = sentiment > 0)) +
+  geom_bar(alpha = 0.5, stat = 'identity', show.legend = FALSE) +
+  facet_wrap(~timestamp, ncol = 15, scales = 'free_x')
 
-  ## save ggplot
-  ggsave(file=paste0('visualization/twitter_sentiment--', year, '.png'), width = 14, height = 10, units = 'in')
-}
+## save ggplot
+ggsave(
+  file=paste0('visualization/twitter_sentiment', '.png'),
+  width = 24,
+  height = 12,
+  units = 'in'
+)
