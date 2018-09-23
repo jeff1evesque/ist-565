@@ -88,4 +88,36 @@ fit.nb = naive_bayes(
 ## predict against test
 nb.pred = predict(fit.nb, test)
 fit.nb.table = table(nb.pred, test$day)
-1-sum(diag(fit.nb.table))/sum(fit.nb.table)
+nb.error = 1-sum(diag(fit.nb.table))/sum(fit.nb.table)
+
+##
+## naive bayes report
+##
+sink('visualization/nb.txt')
+cat('===========================================================\n')
+cat('naive bayes model: \n')
+cat('===========================================================\n')
+fit.nb
+cat('\n\n')
+cat('===========================================================\n')
+cat('prediction: \n')
+cat('===========================================================\n')
+nb.pred
+cat('\n\n')
+cat('===========================================================\n')
+cat('confusion matrix:\n')
+cat('===========================================================\n')
+fit.nb.table
+cat('\n\n')
+cat('===========================================================\n')
+cat('resubstitution error:\n')
+cat('===========================================================\n')
+nb.error
+sink()
+
+##
+## plot naive bayes
+##
+png('visualization/rnb.png', width=10, height=5, units='in', res=1400)
+plot(fit.nb, main='IXIC: Denisty vs Volume')
+dev.off()
