@@ -27,7 +27,7 @@ library('customUtility')
 ##
 ## tidyverse, allows 'group_by'
 ##
-load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'ddply'))
+load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools'))
 
 ## create dataframes
 df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json')
@@ -118,19 +118,19 @@ tweets$timestamp = unlist(lapply(
   tweets$timestamp,
   FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
 ))
-df.ixic$Date = lapply(
+df.ixic$Date = unlist(lapply(
   df.ixic$Date,
   FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
-)
-df.ndx$Date = lapply(
+))
+df.ndx$Date = unlist(lapply(
   df.ndx$Date,
   FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
-)
+))
 
 ## aggregate rows
 tweets.agg = aggregate(. ~ timestamp, tweets, sum)
 names(tweets.agg)[names(tweets.agg) == 'timestamp'] = 'Date'
 
 ## merge dataframes
-df.ndx.tweets = merge(tweets.agg, df.ndx)
-df.ixic.tweets = merge(tweets.agg, df.ixic)
+df.ndx.tweets = merge(tweets.agg, df.ndx, all = TRUE)
+df.ixic.tweets = merge(tweets.agg, df.ixic, all = TRUE)
