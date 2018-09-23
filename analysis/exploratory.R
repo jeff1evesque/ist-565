@@ -30,7 +30,6 @@ library('customUtility')
 load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools'))
 
 ## create dataframes
-df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json')
 df.twitter = load_data(paste0(cwd, '/data/twitter'), remove=TRUE, type='json')
 df.ixic = load_data(paste0(cwd, '/data/nasdaq/^ixic.csv'), remove=TRUE, type='csv')
 df.ndx = load_data(paste0(cwd, '/data/nasdaq/^ndx.csv'), remove=TRUE, type='csv')
