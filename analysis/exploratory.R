@@ -69,3 +69,4 @@ ggsave(
 
 ## day of week
 df.ixic$day = weekdays(as.Date(df.ixic$Date,'%d/%m/%Y'))
+df.ixic = df.ixic[-c(1,nrow(df.ixic)),]
