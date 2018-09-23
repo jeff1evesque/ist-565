@@ -26,7 +26,7 @@ library('customUtility')
 ##
 ## tidyverse, allows 'group_by'
 ##
-load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools', 'stringr'))
+load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools', 'stringr', 'naivebayes', 'stats'))
 
 ## create dataframes
 df.ixic = load_data(paste0(cwd, '/data/nasdaq/^ixic.csv'), remove=TRUE, type='csv')
@@ -68,10 +68,24 @@ ggsave(
 ## day of week
 df.ixic$day = weekdays(as.Date(unlist(df.ixic$Date),'%d-%m-%Y'))
 df.ixic = df.ixic[-c(1,nrow(df.ixic)),]
+df.ixic = df.ixic[, -which(names(df.ixic) == 'Date')]
 
-## perform svm
+## train + test
+set.seed(123)
+smp_size = floor(0.75 * nrow(df.ixic))
+train_ind = sample(seq_len(nrow(df.ixic)), size = smp_size)
+
+train = df.ixic[train_ind, ]
+test = df.ixic[-train_ind, ]
+
+## train naive bayes
 fit.nb = naive_bayes(
-  as.factor(day) ~ .,
-  data=df.ixic,
+  day ~ .,
+  data=train,
   laplace = 1
 )
+
+## predict against test
+nb.pred = predict(fit.nb, test)
+fit.nb.table = table(nb.pred, test$day)
+1-sum(diag(fit.nb.table))/sum(fit.nb.table)
