@@ -57,6 +57,8 @@ df.ndx = subset(
 
 ## convert all words
 df.twitter$text = tolower(df.twitter$text)
+df.ixic$Date = lapply(df.ixic$Date, FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x)))
+df.ndx$Date = lapply(df.ndx$Date, FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x)))
 
 ## apply sentiment analysis
 unnested_tweet = df.twitter %>% unnest_tokens(word, text)
