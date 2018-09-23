@@ -2,7 +2,7 @@
 ## exploratory.R, load + exploratory analysis:
 ##
 ##     - twitter
-##     - nasdaq (ixic)
+##     - nasdaq (ndx)
 ##
 
 ## set project cwd: only execute in RStudio
@@ -29,23 +29,23 @@ library('customUtility')
 load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools'))
 
 ## create dataframes
-df.ixic = load_data(paste0(cwd, '/data/nasdaq/^ixic.csv'), remove=TRUE, type='csv')
+df.ndx = load_data(paste0(cwd, '/data/nasdaq/^ndx.csv'), remove=TRUE, type='csv')
 
-## time series: ixic
-ggplot(data = df.ixic) +
+## time series: ndx
+ggplot(data = df.ndx) +
   geom_point(aes(Date, as.numeric(High)), color='red') +
   geom_point(aes(Date, as.numeric(Low)), color='blue') +
-  labs(x = 'Date', y = 'ixic Price', title = 'ixic Price vs Date') +
+  labs(x = 'Date', y = 'ndx Price', title = 'ndx Price vs Date') +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ggsave(
-  'visualization/timeseries-ixic.png',
+  'visualization/timeseries-ndx.png',
   width = 16,
   height = 9,
   dpi = 100
 )
 
 ## day of week
-df.ixic$day = weekdays(as.Date(df.ixic$Date,'%d/%m/%Y'))
-df.ixic = df.ixic[-c(1,nrow(df.ixic)),]
+df.ndx$day = weekdays(as.Date(df.ndx$Date,'%d/%m/%Y'))
+df.ndx = df.ndx[-c(1,nrow(df.ndx)),]
