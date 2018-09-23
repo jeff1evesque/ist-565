@@ -114,8 +114,23 @@ ggsave(
 )
 
 ## remove day suffix
-df.ixic$Date = lapply(df.ixic$Date, FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x)))
-df.ndx$Date = lapply(df.ndx$Date, FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x)))
+tweets$timestamp = unlist(lapply(
+  tweets$timestamp,
+  FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
+))
+df.ixic$Date = lapply(
+  df.ixic$Date,
+  FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
+)
+df.ndx$Date = lapply(
+  df.ndx$Date,
+  FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
+)
 
 ## aggregate rows
 tweets.agg = aggregate(. ~ timestamp, tweets, sum)
+names(tweets.agg)[names(tweets.agg) == 'timestamp'] = 'Date'
+
+## merge dataframes
+df.ndx.tweets = merge(tweets.agg, df.ndx)
+df.ixic.tweets = merge(tweets.agg, df.ixic)
