@@ -46,6 +46,14 @@ df.twitter = subset(
   df.twitter,
   !grepl('^(200[0-9]{1}|201[0-2]{1}|2013-[0]{1}[1-9]{1}|2013-[1-9]{1}[0-9]{1})-', timestamp)
 )
+df.ixic = subset(
+  df.ixic,
+  !grepl('^(200[0-9]{1}|201[0-2]{1}|2013-[0]{1}[1-9]{1}|2013-[1-9]{1}[0-9]{1})-', Date)
+)
+df.ndx = subset(
+  df.ndx,
+  !grepl('^(200[0-9]{1}|201[0-2]{1}|2013-[0]{1}[1-9]{1}|2013-[1-9]{1}[0-9]{1})-', Date)
+)
 
 ## convert all words
 df.twitter$text = tolower(df.twitter$text)
@@ -61,11 +69,7 @@ tweet_sentiments = unnested_tweet %>%
   spread(sentiment, n, fill = 0) %>%
   mutate(sentiment = positive - negative)
 
-## 2013 subset ggplot
-twitter_subset = c()
-years = c('2014', '2015', '2016', '2017', '2018')
-
-## entire plot
+## tweets: entire plot
 nsize = nrow(tweet_sentiments)
 ggplot(tweet_sentiments, aes(index, sentiment, fill = sentiment > 0)) +
   geom_bar(alpha = 0.5, stat = 'identity', show.legend = FALSE) +
@@ -73,8 +77,38 @@ ggplot(tweet_sentiments, aes(index, sentiment, fill = sentiment > 0)) +
 
 ## save ggplot
 ggsave(
-  file=paste0('visualization/twitter_sentiment', '.png'),
+  file='visualization/twitter_sentiment.png',
   width = 24,
   height = 12,
   units = 'in'
+)
+
+## time series: ixic
+ggplot(data = df.ixic) +
+  geom_point(aes(Date, as.numeric(Open)), color='red') +
+  geom_point(aes(Date, as.numeric(Close)), color='blue') +
+  labs(x = 'Date', y = 'IXIC Price', title = 'IXIC Price vs Date') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-ixic.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## time series: ndx
+ggplot(data = df.ndx) +
+  geom_point(aes(Date, as.numeric(High)), color='red') +
+  geom_point(aes(Date, as.numeric(Low)), color='blue') +
+  labs(x = 'Date', y = 'NDX Price', title = 'NDX Price vs Date') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-ndx.png',
+  width = 16,
+  height = 9,
+  dpi = 100
 )
