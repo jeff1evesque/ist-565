@@ -25,13 +25,108 @@ library('customUtility')
 ##     between minus five (negative) and plus five (positive)
 ##
 ## tidyverse, allows 'group_by'
+## RcppParallel, is required by 'text2vec'
 ##
-load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools'))
+load_package(c(
+  'data.table',
+  'tidytext',
+  'tidyverse',
+  'gtools',
+  'RcppParallel',
+  'text2vec',
+  'jsonlite',
+  'readtext',
+  'rlist',
+  'naivebayes'
+))
+
+## local variables
+articles = list()
+dtm.final = list()
 
 ## create dataframes
 df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json')
 df.twitter = load_data(paste0(cwd, '/data/twitter'), remove=TRUE, type='json')
 df.ndx = load_data(paste0(cwd, '/data/nasdaq/^ndx.csv'), remove=TRUE, type='csv')
+
+## create vocabulary
+df.wikipedia.sample = fromJSON('2016-08-01--sample-train.json')
+df.wikipedia.sample = as.matrix(df.wikipedia.sample[[1]])[[3]]
+
+## generate tfidf dtm per article
+for (filename in df.wikipedia.sample$article) {
+  print(paste0(cwd, '/data/wikipedia/articles/', filename, '.txt'))
+
+  ## read article
+  tryCatch({
+    fp = readtext(paste0(cwd, '/data/wikipedia/articles/', filename, '.txt'))
+  }, warning = function(warning_condition) {
+    print(paste0('warning: ', warning_condition))
+  }, error = function(error_condition) {
+    print(paste0('error: ', error_condition))
+  })
+
+  if (!is.null(fp) && fp[[1]] != '' && fp[[2]] != '') {
+    ## create vocabulary
+    it_train = itoken(
+      fp[[2]],
+      preprocessor = tolower,
+      tokenizer = word_tokenizer
+    )
+    vocab = create_vocabulary(it_train)
+    
+    ## document term matrix
+    vectorizer = vocab_vectorizer(vocab)
+    dtm = create_dtm(it_train, vectorizer)
+
+    f = tools::file_path_sans_ext(fp[[1]])
+    category = df.wikipedia.sample[which(df.wikipedia.sample$article == f),]$category
+
+    if (!is.null(category) && length(category) > 0) {
+      dtm.final[f] = dtm
+      articles[f] = category
+    }
+  }
+
+  ## reset fp
+  fp = NULL
+}
+
+## merge dataframe
+df.merged = as.data.frame(
+  names(articles)
+)
+df.merged$category = unlist(articles[names(articles)], use.names=F)
+df.merged$dtm = dtm.final
+colnames(df.merged) = c('article', 'category', 'dtm')
+
+##
+## create train + test
+##
+## Note: seed defined to ensure reproducible sample
+##
+set.seed(123)
+sample_size = floor(2/3 * nrow(df.merged))
+train = sample(seq_len(nrow(df.merged)), size = sample_size)
+df.train = df.merged[train, ]
+df.test = df.merged[-train, ]
+
+## term frequency-inverse document frequency
+model.tfidf = TfIdf$new()
+dtm.tfidf = model.tfidf$fit_transform(df.merged$dtm[[1]])
+
+## generate naive bayes
+fit.nb = naive_bayes(
+  as.factor(category) ~ df.train$dtm,
+  data=df.train,
+  laplace = 1
+)
+
+
+
+
+
+
 
 ## remove time from datetime
 df.twitter$timestamp = unlist(lapply(strsplit(
