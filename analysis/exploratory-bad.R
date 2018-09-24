@@ -15,7 +15,7 @@ if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
 dir.create(file.path(cwd, 'visualization'), showWarnings = FALSE)
 
 ## utility functions
-devtools::install_local(paste(cwd, sep='', '/packages/customUtility'))
+devtools::install_local(paste0(cwd, '/packages/customUtility'))
 library('customUtility')
 
 ##
@@ -25,13 +25,109 @@ library('customUtility')
 ##     between minus five (negative) and plus five (positive)
 ##
 ## tidyverse, allows 'group_by'
+## RcppParallel, is required by 'text2vec'
 ##
-load_package(c('data.table', 'RJSONIO', 'tidytext', 'tidyverse', 'gtools'))
+load_package(c(
+  'data.table',
+  'tidytext',
+  'tidyverse',
+  'gtools',
+  'RcppParallel',
+  'text2vec',
+  'jsonlite',
+  'readtext',
+  'rlist',
+  'naivebayes'
+))
 
 ## create dataframes
 df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json')
 df.twitter = load_data(paste0(cwd, '/data/twitter'), remove=TRUE, type='json')
 df.ndx = load_data(paste0(cwd, '/data/nasdaq/^ndx.csv'), remove=TRUE, type='csv')
+
+## create vocabulary
+df.wikipedia.sample = fromJSON('2016-08-01--sample-train.json')
+df.wikipedia.sample = as.matrix(df.wikipedia.sample[[1]])[[3]]
+
+## generate corpus
+corpus_split = corpus_loader(paste0(cwd, '/data/wikipedia/articles'))
+
+## local variables
+categories = c()
+
+## determine article + category
+for (filename in corpus_split['articles']) {
+  f = tools::file_path_sans_ext(filename)
+  category = df.wikipedia.sample[which(df.wikipedia.sample$article == f),]$category
+
+  if (!is.null(category) && length(category) > 0) {
+    categories = c(categories, category)
+  }
+}
+
+## merge dataframe
+df.merged = as.data.frame(articles)
+df.merged$category = unlist(articles[names(articles)], use.names=F)
+df.merged$dtm = corpus_split['tfidf']
+colnames(df.merged) = c('article', 'category', 'dtm')
+
+##
+## create train + test
+##
+## Note: seed defined to ensure reproducible sample
+##
+set.seed(123)
+sample_size = floor(2/3 * nrow(df.merged))
+train = sample(seq_len(nrow(df.merged)), size = sample_size)
+df.train = df.merged[train, ]
+df.test = df.merged[-train, ]
+
+## generate naive bayes
+fit.nb = naive_bayes(
+  as.factor(category) ~ df.train$dtm,
+  data=df.train,
+  laplace = 1
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## remove time from datetime
 df.twitter$timestamp = unlist(lapply(strsplit(
