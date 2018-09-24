@@ -15,7 +15,7 @@ if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
 dir.create(file.path(cwd, 'visualization'), showWarnings = FALSE)
 
 ## utility functions
-devtools::install_local(paste(cwd, sep='', '/packages/customUtility'))
+devtools::install_local(paste0(cwd, '/packages/customUtility'))
 library('customUtility')
 
 ##
@@ -40,10 +40,6 @@ load_package(c(
   'naivebayes'
 ))
 
-## local variables
-articles = list()
-dtm.final = list()
-
 ## create dataframes
 df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json')
 df.twitter = load_data(paste0(cwd, '/data/twitter'), remove=TRUE, type='json')
@@ -53,51 +49,26 @@ df.ndx = load_data(paste0(cwd, '/data/nasdaq/^ndx.csv'), remove=TRUE, type='csv'
 df.wikipedia.sample = fromJSON('2016-08-01--sample-train.json')
 df.wikipedia.sample = as.matrix(df.wikipedia.sample[[1]])[[3]]
 
-## generate tfidf dtm per article
-for (filename in df.wikipedia.sample$article) {
-  print(paste0(cwd, '/data/wikipedia/articles/', filename, '.txt'))
+## generate corpus
+corpus_split = corpus_loader(paste0(cwd, '/data/wikipedia/articles'))
 
-  ## read article
-  tryCatch({
-    fp = readtext(paste0(cwd, '/data/wikipedia/articles/', filename, '.txt'))
-  }, warning = function(warning_condition) {
-    print(paste0('warning: ', warning_condition))
-  }, error = function(error_condition) {
-    print(paste0('error: ', error_condition))
-  })
+## local variables
+categories = c()
 
-  if (!is.null(fp) && fp[[1]] != '' && fp[[2]] != '') {
-    ## create vocabulary
-    it_train = itoken(
-      fp[[2]],
-      preprocessor = tolower,
-      tokenizer = word_tokenizer
-    )
-    vocab = create_vocabulary(it_train)
-    
-    ## document term matrix
-    vectorizer = vocab_vectorizer(vocab)
-    dtm = create_dtm(it_train, vectorizer)
+## determine article + category
+for (filename in corpus_split['articles']) {
+  f = tools::file_path_sans_ext(filename)
+  category = df.wikipedia.sample[which(df.wikipedia.sample$article == f),]$category
 
-    f = tools::file_path_sans_ext(fp[[1]])
-    category = df.wikipedia.sample[which(df.wikipedia.sample$article == f),]$category
-
-    if (!is.null(category) && length(category) > 0) {
-      dtm.final[f] = dtm
-      articles[f] = category
-    }
+  if (!is.null(category) && length(category) > 0) {
+    categories = c(categories, category)
   }
-
-  ## reset fp
-  fp = NULL
 }
 
 ## merge dataframe
-df.merged = as.data.frame(
-  names(articles)
-)
+df.merged = as.data.frame(articles)
 df.merged$category = unlist(articles[names(articles)], use.names=F)
-df.merged$dtm = dtm.final
+df.merged$dtm = corpus_split['tfidf']
 colnames(df.merged) = c('article', 'category', 'dtm')
 
 ##
@@ -111,16 +82,46 @@ train = sample(seq_len(nrow(df.merged)), size = sample_size)
 df.train = df.merged[train, ]
 df.test = df.merged[-train, ]
 
-## term frequency-inverse document frequency
-model.tfidf = TfIdf$new()
-dtm.tfidf = model.tfidf$fit_transform(df.merged$dtm[[1]])
-
 ## generate naive bayes
 fit.nb = naive_bayes(
   as.factor(category) ~ df.train$dtm,
   data=df.train,
   laplace = 1
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
