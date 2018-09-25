@@ -99,12 +99,16 @@ train = sample(seq_len(nrow(df.merged)), size = sample_size)
 df.train = df.merged[train, ]
 df.test = df.merged[-train, ]
 
+##
 ## generate naive bayes
+##
+nb.start = Sys.time()
 fit.nb = naive_bayes(
   as.factor(X.category) ~ .,
   data=df.train,
   laplace = 1
 )
+nb.end = Sys.time()
 
 ## predict against test
 nb.pred = predict(fit.nb, df.test)
@@ -142,9 +146,9 @@ sink()
 ##
 rf.start = Sys.time()
 fit.rf = randomForest(
-  as.factor(label) ~ .,
-  data = df.train.full,
-  ntree = 30
+  as.factor(X.category) ~ .,
+  data = df.train,
+  ntree = 5
 )
 rf.end = Sys.time()
 
