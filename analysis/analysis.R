@@ -38,7 +38,8 @@ load_package(c(
   'rlist',
   'naivebayes',
   'FSelector',
-  'tm'
+  'tm',
+  'randomForest'
 ))
 
 ## create dataframes
