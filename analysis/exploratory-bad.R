@@ -37,7 +37,8 @@ load_package(c(
   'readtext',
   'rlist',
   'naivebayes',
-  'FSelector'
+  'FSelector',
+  'tm'
 ))
 
 ## create dataframes
@@ -51,23 +52,26 @@ wikipedia.list = as.data.frame(wikipedia.sample$items$articles)
 corpus_split = load_corpus(paste0(cwd, '/data/wikipedia/articles'), subset=wikipedia.list$article)
 df.merged = as.data.frame(as.matrix(corpus_split))
 
-## append article column + aggregate articles
-df.merged$article_name = lapply(dimnames(corpus_split)[1], FUN = function(x) { gsub("_[0-9]+$", '', x) })
-df.agg.start = Sys.time()
-df.merged = aggregate(x = df.merged, by = df.merged$article_name, FUN = sum)
-df.agg.end = Sys.time()
-
-## append category column
+## append article column + category column
 df.merged$category_name = dimnames(corpus_split)[2]
+df.merged$article_name = lapply(dimnames(corpus_split)[1], FUN = function(x) { gsub("_[0-9]+$", '', x) })
+
+## aggregate articles
+df.agg.start = Sys.time()
+df.merged = aggregate(
+  x = df.merged[, -c(which(names(df.merged)=='article_name'), which(names(df.merged)=='category_name'))],
+  by = df.merged$article_name,
+  na.rm = TRUE,
+  na.action = 0,
+  FUN = sum
+)
+df.agg.end = Sys.time()
 
 ## reduce feature set
 df.merged = chi.squared(
-  category_name ~ .,
+  as.factor(category_name) ~ .,
   data=subset(df.merged, select=-c(article_name))
 )
-
-## set column names
-colnames(df.merged) = c('article', 'category', 'dtm')
 
 ##
 ## create train + test
