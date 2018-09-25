@@ -78,11 +78,14 @@ X.category = lapply(articles.nodupe, FUN = function(x) {
 })
 df.merged$X.category = X.category
 
+## ensure dataframe with vectors not lists
+df.merged = as.data.frame(lapply(df.merged, unlist))
+
 ## reduce feature set
-feature.set = chi.squared(
-  as.factor(X.category) ~ .,
-  df.merged[-c(which(names(df.merged)=='article_name')),]
-)
+#feature.set = chi.squared(
+#  as.factor(X.category) ~ .,
+#  df.merged[-c(which(names(df.merged)=='article_name')),]
+#)
 
 ##
 ## create train + test
@@ -97,7 +100,7 @@ df.test = df.merged[-train, ]
 
 ## generate naive bayes
 fit.nb = naive_bayes(
-  as.factor(category) ~ .,
+  as.factor(X.category) ~ .,
   data=df.train,
   laplace = 1
 )
