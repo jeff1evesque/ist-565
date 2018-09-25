@@ -1,8 +1,7 @@
 ##
-## exploratory.R, load + exploratory analysis:
+## wikipedia.R, classification analysis:
 ##
-##     - twitter
-##     - nasdaq (ndx)
+##     - wikipedia
 ##
 
 ## set project cwd: only execute in RStudio
@@ -37,13 +36,12 @@ load_package(c(
   'jsonlite',
   'readtext',
   'rlist',
-  'naivebayes'
+  'naivebayes',
+  'FSelector'
 ))
 
 ## create dataframes
 df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json')
-df.twitter = load_data(paste0(cwd, '/data/twitter'), remove=TRUE, type='json')
-df.ndx = load_data(paste0(cwd, '/data/nasdaq/^ndx.csv'), remove=TRUE, type='csv')
 
 ## article list: rank, views, article, category
 wikipedia.sample = fromJSON('2016-08-01--sample-train.json')
@@ -53,23 +51,22 @@ wikipedia.list = as.data.frame(wikipedia.sample$items$articles)
 corpus_split = load_corpus(paste0(cwd, '/data/wikipedia/articles'), subset=wikipedia.list$article)
 df.merged = as.data.frame(as.matrix(corpus_split))
 
-## local variables
-categories = c()
+## append article column + aggregate articles
+df.merged$article_name = lapply(dimnames(corpus_split)[1], FUN = function(x) { gsub("_[0-9]+$", '', x) })
+df.agg.start = Sys.time()
+df.merged = aggregate(x = df.merged, by = df.merged$article_name, FUN = sum)
+df.agg.end = Sys.time()
 
-## determine article + category
-for (filename in corpus_split['articles']) {
-  f = tools::file_path_sans_ext(filename)
-  category = df.wikipedia.sample[which(df.wikipedia.sample$article == f),]$category
+## append category column
+df.merged$category_name = dimnames(corpus_split)[2]
 
-  if (!is.null(category) && length(category) > 0) {
-    categories = c(categories, category)
-  }
-}
+## reduce feature set
+df.merged = chi.squared(
+  category_name ~ .,
+  data=subset(df.merged, select=-c(article_name))
+)
 
-## merge dataframe
-df.merged = as.data.frame(articles)
-df.merged$category = unlist(articles[names(articles)], use.names=F)
-df.merged$dtm = corpus_split['tfidf']
+## set column names
 colnames(df.merged) = c('article', 'category', 'dtm')
 
 ##
@@ -85,123 +82,44 @@ df.test = df.merged[-train, ]
 
 ## generate naive bayes
 fit.nb = naive_bayes(
-  as.factor(category) ~ df.train$dtm,
+  as.factor(category) ~ .,
   data=df.train,
   laplace = 1
 )
 
+## predict against test
+nb.pred = predict(fit.nb, df.test)
+fit.nb.table = table(nb.pred, df.test$category)
+nb.error = 1-sum(diag(fit.nb.table))/sum(fit.nb.table)
 
+##
+## naive bayes report
+##
+sink('visualization/nb.txt')
+cat('===========================================================\n')
+cat('naive bayes model: \n')
+cat('===========================================================\n')
+fit.nb
+cat('\n\n')
+cat('===========================================================\n')
+cat('prediction: \n')
+cat('===========================================================\n')
+nb.pred
+cat('\n\n')
+cat('===========================================================\n')
+cat('confusion matrix:\n')
+cat('===========================================================\n')
+fit.nb.table
+cat('\n\n')
+cat('===========================================================\n')
+cat('resubstitution error:\n')
+cat('===========================================================\n')
+nb.error
+sink()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## remove time from datetime
-df.twitter$timestamp = unlist(lapply(strsplit(
-  as.character(df.twitter$timestamp), ' '),
-  '[[', 1)
-)
-
-## remove 2000-2013
-df.twitter = subset(
-  df.twitter,
-  !grepl('^(200[0-9]{1}|201[0-2]{1}|2013-[0]{1}[1-9]{1}|2013-[1-9]{1}[0-9]{1})-', timestamp)
-)
-df.ndx = subset(
-  df.ndx,
-  !grepl('^(200[0-9]{1}|201[0-2]{1}|2013-[0]{1}[1-9]{1}|2013-[1-9]{1}[0-9]{1})-', Date)
-)
-
-## convert all words
-df.twitter$text = tolower(df.twitter$text)
-
-## apply sentiment analysis
-tweets.unnested = df.twitter %>% unnest_tokens(word, text)
-tweets = tweets.unnested %>%
-  group_by(timestamp) %>%
-  mutate(word_count = 1:n()) %>%
-  inner_join(get_sentiments('bing')) %>%
-  count(timestamp, index = word_count, sentiment) %>%
-  ungroup() %>%
-  spread(sentiment, n, fill = 0) %>%
-  mutate(sentiment = positive - negative)
-
-## tweets: entire plot
-nsize = nrow(tweets)
-ggplot(tweets, aes(index, sentiment, fill = sentiment > 0)) +
-  geom_bar(alpha = 0.5, stat = 'identity', show.legend = FALSE) +
-  facet_wrap(~timestamp, ncol = 15, scales = 'free_x')
-
-## save ggplot
-ggsave(
-  file='visualization/twitter_sentiment.png',
-  width = 24,
-  height = 12,
-  units = 'in'
-)
-
-## time series: ndx
-ggplot(data = df.ndx) +
-  geom_point(aes(Date, as.numeric(High)), color='red') +
-  geom_point(aes(Date, as.numeric(Low)), color='blue') +
-  labs(x = 'Date', y = 'NDX Price', title = 'NDX Price vs Date') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-ndx.png',
-  width = 16,
-  height = 9,
-  dpi = 100
-)
-
-## remove day suffix
-tweets$timestamp = unlist(lapply(
-  tweets$timestamp,
-  FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
-))
-df.ndx$Date = unlist(lapply(
-  df.ndx$Date,
-  FUN=function(x)(sub('^(201[0-9]{1}-[0-9]{1}[0-9]{1}).*', '\\1', x))
-))
-
-## aggregate rows
-tweets.agg = aggregate(. ~ timestamp, tweets, sum)
-names(tweets.agg)[names(tweets.agg) == 'timestamp'] = 'Date'
-
-## merge dataframes
-df.ndx.tweets = merge(tweets.agg, df.ndx, all = TRUE)
+##
+## plot naive bayes
+##
+png('visualization/nb-wikipedia.png', width=10, height=5, units='in', res=1400)
+plot(fit.nb, main='Naive Bayes: categorize articles')
+dev.off()
