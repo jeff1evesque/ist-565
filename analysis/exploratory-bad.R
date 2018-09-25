@@ -52,28 +52,36 @@ wikipedia.list = as.data.frame(wikipedia.sample$items$articles)
 corpus_split = load_corpus(paste0(cwd, '/data/wikipedia/articles'), subset=wikipedia.list$article)
 df.merged = as.data.frame(as.matrix(corpus_split))
 
-## append article column + category column
-df.merged$category_name = dimnames(corpus_split)[2]
-df.merged$article_name = lapply(dimnames(corpus_split)[1], FUN = function(x) { gsub("_[0-9]+$", '', x) })
-
 ## aggregate articles
 df.agg.start = Sys.time()
 df.merged = aggregate(
-  x = df.merged[, -c(
-    which(names(df.merged)=='article_name'),
-    which(names(df.merged)=='category_name'))
-  ],
-  by = df.merged$article_name,
+  df.merged[, -c(
+    which(names(df.merged)=='article_name')
+  )],
+  by = c(df.merged$article_name),
   na.rm = TRUE,
   na.action = 0,
   FUN = sum
 )
 df.agg.end = Sys.time()
 
+## store article names
+articles.nodupe = unique(lapply(dimnames(corpus_split)[1], FUN = function(x) { gsub('_[0-9]+$', '', x) })[[1]])
+row.names(articles.nodupe)
+
+## lookup + append category
+X.category = lapply(articles.nodupe, FUN = function(x) {
+  wikipedia.list[
+    which(wikipedia.list$article == gsub('.txt$', '', x)),
+    grep('^category$', colnames(wikipedia.list))
+  ]
+})
+df.merged$X.category = X.category
+
 ## reduce feature set
-df.merged = chi.squared(
-  as.factor(category_name) ~ .,
-  data=df.merged[, -c(which(names(df.merged)=='article_name'))]
+feature.set = chi.squared(
+  as.factor(X.category) ~ .,
+  df.merged[-c(which(names(df.merged)=='article_name')),]
 )
 
 ##
