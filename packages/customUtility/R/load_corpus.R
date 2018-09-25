@@ -26,7 +26,6 @@ load_corpus = function(source, remove=FALSE, type='txt', subset='') {
     ## ensure nonempty content
     f = file.info(files)
     nonempty_files = rownames(f[which(f$size > 0),])
-    print(paste0('first 1: ', nonempty_files))
 
     ##
     ## subset result: remove if not in sample dataset
