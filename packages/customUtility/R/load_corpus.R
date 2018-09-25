@@ -6,7 +6,7 @@
 ##     - text2vect
 ##     - data.table
 ##
-load_corpus = function(source, remove=FALSE, type='txt') {
+load_corpus = function(source, remove=FALSE, type='txt', subset='') {
   ##
   ## load source(s) into dataframe
   ##
@@ -26,6 +26,17 @@ load_corpus = function(source, remove=FALSE, type='txt') {
     ## ensure nonempty content
     f = file.info(files)
     nonempty_files = rownames(f[which(f$size > 0),])
+    print(paste0('first 1: ', nonempty_files))
+
+    ##
+    ## subset result: remove if not in sample dataset
+    ##
+    if (length(subset) > 0) {
+      validate = paste0(subset, '.txt')
+      original = basename(nonempty_files)
+      basepath = dirname(nonempty_files[1])
+      nonempty_files = paste0(basepath, '/', Reduce(intersect, list(original, validate)))
+    }
 
     ## iterator over files
     it_files = ifiles(nonempty_files)

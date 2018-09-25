@@ -45,12 +45,13 @@ df.wikipedia = load_data(paste0(cwd, '/data/wikipedia'), remove=TRUE, type='json
 df.twitter = load_data(paste0(cwd, '/data/twitter'), remove=TRUE, type='json')
 df.ndx = load_data(paste0(cwd, '/data/nasdaq/^ndx.csv'), remove=TRUE, type='csv')
 
-## create vocabulary
-df.wikipedia.sample = fromJSON('2016-08-01--sample-train.json')
-df.wikipedia.sample = as.matrix(df.wikipedia.sample[[1]])[[3]]
+## article list: rank, views, article, category
+wikipedia.sample = fromJSON('2016-08-01--sample-train.json')
+wikipedia.list = as.data.frame(wikipedia.sample$items$articles)
 
 ## generate corpus
-corpus_split = load_corpus(paste0(cwd, '/data/wikipedia/articles'))
+corpus_split = load_corpus(paste0(cwd, '/data/wikipedia/articles'), subset=wikipedia.list$article)
+df.merged = as.data.frame(as.matrix(corpus_split))
 
 ## local variables
 categories = c()
