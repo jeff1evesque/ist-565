@@ -136,8 +136,28 @@ nb.error
 sink()
 
 ##
-## plot naive bayes
+## random forest: instead of using 'method=class' like rpart, 'as.factor'
+##     is implemented directly on the formula.
 ##
-png('visualization/nb-wikipedia.png', width=10, height=5, units='in', res=1400)
-plot(fit.nb, main='Naive Bayes: categorize articles')
-dev.off()
+rf.start = Sys.time()
+fit.rf = randomForest(
+  as.factor(label) ~ .,
+  data = df.train.full,
+  ntree = 30
+)
+rf.end = Sys.time()
+
+##
+## random forest report
+##
+sink('visualization/rf-wikipedia.txt')
+cat('===========================================================\n')
+cat('random forest model: 30 trees\n')
+cat('===========================================================\n')
+fit.rf
+cat('\n\n')
+cat('===========================================================\n')
+cat('prediction: \n')
+cat('===========================================================\n')
+predict(fit.rf, df.test)
+sink()
