@@ -49,7 +49,7 @@ load_corpus = function(source, remove=FALSE, type='txt', subset='') {
     )
 
     ## create vocabulary
-    vocab = create_vocabulary(it_tokens)
+    vocab = create_vocabulary(it_tokens, stopwords = tm::stopwords('english'))
     vectorizer = vocab_vectorizer(vocab)
 
     ## term frequency-inverse document frequency
