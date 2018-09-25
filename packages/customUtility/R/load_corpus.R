@@ -1,12 +1,12 @@
 ##
-## corpus_loader.R, loads sourcefile(s) into vectorized collection.
+## load_corpus.R, loads sourcefile(s) into vectorized collection.
 ##
 ## Note: this script requires the following packages:
 ##
 ##     - text2vect
 ##     - data.table
 ##
-corpus_loader = function(source, remove=FALSE, type='txt') {
+load_corpus = function(source, remove=FALSE, type='txt') {
   ##
   ## load source(s) into dataframe
   ##
@@ -48,4 +48,8 @@ corpus_loader = function(source, remove=FALSE, type='txt') {
     dtm.tfidf = model.tfidf$fit_transform(dtm)
 
     return(dtm.tfidf)
+  }
+  else {
+    return(FALSE)
+  }
 }

@@ -50,7 +50,7 @@ df.wikipedia.sample = fromJSON('2016-08-01--sample-train.json')
 df.wikipedia.sample = as.matrix(df.wikipedia.sample[[1]])[[3]]
 
 ## generate corpus
-corpus_split = corpus_loader(paste0(cwd, '/data/wikipedia/articles'))
+corpus_split = load_corpus(paste0(cwd, '/data/wikipedia/articles'))
 
 ## local variables
 categories = c()
