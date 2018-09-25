@@ -59,7 +59,10 @@ df.merged$article_name = lapply(dimnames(corpus_split)[1], FUN = function(x) { g
 ## aggregate articles
 df.agg.start = Sys.time()
 df.merged = aggregate(
-  x = df.merged[, -c(which(names(df.merged)=='article_name'), which(names(df.merged)=='category_name'))],
+  x = df.merged[, -c(
+    which(names(df.merged)=='article_name'),
+    which(names(df.merged)=='category_name'))
+  ],
   by = df.merged$article_name,
   na.rm = TRUE,
   na.action = 0,
@@ -70,7 +73,7 @@ df.agg.end = Sys.time()
 ## reduce feature set
 df.merged = chi.squared(
   as.factor(category_name) ~ .,
-  data=subset(df.merged, select=-c(article_name))
+  data=df.merged[, -c(which(names(df.merged)=='article_name'))]
 )
 
 ##
