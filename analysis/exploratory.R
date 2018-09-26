@@ -103,7 +103,6 @@ tweets = tweets.unnested %>%
   mutate(sentiment = positive - negative)
 
 ## tweets: entire plot
-nsize = nrow(tweets)
 ggplot(tweets, aes(index, sentiment, fill = sentiment > 0)) +
   geom_bar(alpha = 0.5, stat = 'identity', show.legend = FALSE) +
   facet_wrap(~timestamp, ncol = 15, scales = 'free_x')
